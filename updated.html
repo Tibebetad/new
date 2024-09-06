@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="img/Image 1.png" rel="icon">
+  <title>ከበሮ-Tiles</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
+    rel="stylesheet">
+  <style>
+    .bid {
+      background-color: #dfdfdf;
+    }
+
+    /* From Uiverse.io by akshat-patel28 */
+    .button-container {
+      display: flex;
+      background-color: #095F42;
+      width: 99%;
+      height: 45px;
+      align-items: center;
+      justify-content: space-around;
+      border-radius: 10px;
+      /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px,
+        rgba(245, 73, 144, 0.5) 5px 10px 15px; */
+    }
+
+    .button {
+      outline: 0 !important;
+      border: 0 !important;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      transition: all ease-in-out 0.3s;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+    }
+
+    .icon {
+      font-size: 20px;
+    }
+
+    /* Splash screen styling */
+    .splash-screen {
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      background-color: #007bff;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      z-index: 1000;
+    }
+
+    /* From Uiverse.io by Spacious74 */
+    .laptop {
+      transform: scale(0.8);
+    }
+
+    .screen {
+      border-radius: 20px;
+      box-shadow: inset 0 0 0 2px #c8cacb, inset 0 0 0 10px #000;
+      height: 318px;
+      width: 518px;
+      margin: 0 auto;
+      padding: 9px 9px 23px 9px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: linear-gradient(5deg,
+          #3f51b1 0%,
+          #5a55ae 13%,
+          #7b5fac 25%,
+          #8f6aae 38%,
+          #a86aa4 50%,
+          #cc6b8e 62%,
+          #f18271 75%,
+          #f3a469 87%,
+          #f7c978 100%);
+
+      transform-style: preserve-3d;
+      transform: perspective(1900px) rotateX(-88.5deg);
+      transform-origin: 50% 100%;
+      animation: open 4s infinite alternate;
+    }
+
+    @keyframes open {
+      0% {
+        transform: perspective(1900px) rotateX(-88.5deg);
+      }
+
+      100% {
+        transform: perspective(1000px) rotateX(0deg);
+      }
+    }
+
+    .screen::before {
+      content: "";
+      width: 518px;
+      height: 12px;
+      position: absolute;
+      background: linear-gradient(#979899, transparent);
+      top: -3px;
+      transform: rotateX(90deg);
+      border-radius: 5px 5px;
+    }
+
+    .text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      color: #fff;
+      letter-spacing: 1px;
+      text-shadow: 0 0 5px #fff;
+    }
+
+    .header {
+      width: 100px;
+      height: 12px;
+      position: absolute;
+      background-color: #000;
+      top: 10px;
+      left: 50%;
+      transform: translate(-50%, -0%);
+      border-radius: 0 0 6px 6px;
+    }
+
+    .screen::after {
+      background: linear-gradient(to bottom, #272727, #0d0d0d);
+      border-radius: 0 0 20px 20px;
+      bottom: 2px;
+      content: "";
+      height: 24px;
+      left: 2px;
+      position: absolute;
+      width: 514px;
+    }
+
+    .keyboard {
+      background: radial-gradient(circle at center, #e2e3e4 85%, #a9abac 100%);
+      border: solid #a0a3a7;
+      border-radius: 2px 2px 12px 12px;
+      border-width: 1px 2px 0 2px;
+      box-shadow: inset 0 -2px 8px 0 #6c7074;
+      height: 24px;
+      margin-top: -10px;
+      position: relative;
+      width: 620px;
+      z-index: 9;
+    }
+
+    .keyboard::after {
+      background: #e2e3e4;
+      border-radius: 0 0 10px 10px;
+      box-shadow: inset 0 0 4px 2px #babdbf;
+      content: "";
+      height: 10px;
+      left: 50%;
+      margin-left: -60px;
+      position: absolute;
+      top: 0;
+      width: 120px;
+    }
+
+    .keyboard::before {
+      background: 0 0;
+      border-radius: 0 0 3px 3px;
+      bottom: -2px;
+      box-shadow: -270px 0 #272727, 250px 0 #272727;
+      content: "";
+      height: 2px;
+      left: 50%;
+      margin-left: -10px;
+      position: absolute;
+      width: 40px;
+    }
+
+
+    /* Hide the page content during the splash screen */
+    .page-content {
+      display: none;
+    }
+
+    /* Styles for mobile view */
+    @media (max-width: 768px) {
+      .navbar {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70%;
+        height: 49px;
+        /* Reduced height */
+
+        /* Center content horizontally */
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        /* Vertically center the content */
+      }
+
+      .navbar-nav {
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        /* Center icons horizontally */
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        /* Padding around the icons */
+      }
+
+      .navbar-nav .nav-item {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 15px;
+        /* Even spacing between icons */
+      }
+
+      .navbar-nav .nav-item .bi {
+        font-size: 28px;
+        /* Icon size */
+      }
+
+      /* Play button styling */
+      .play-button {
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      /* Hide desktop message on mobile */
+      .desktop-message {
+        display: none;
+      }
+    }
+
+    /* Styles for larger screens */
+    @media (min-width: 769px) {
+      .mobile-only {
+        display: none;
+      }
+
+      .desktop-message {
+        display: block;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 24px;
+        color: #555;
+      }
+    }
+
+    /* From Uiverse.io by gustavofusco */
+    .pencil {
+      display: block;
+      width: 10em;
+      height: 10em;
+    }
+
+    .pencil__body1,
+    .pencil__body2,
+    .pencil__body3,
+    .pencil__eraser,
+    .pencil__eraser-skew,
+    .pencil__point,
+    .pencil__rotate,
+    .pencil__stroke {
+      animation-duration: 3s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    .pencil__body1,
+    .pencil__body2,
+    .pencil__body3 {
+      transform: rotate(-90deg);
+    }
+
+    .pencil__body1 {
+      animation-name: pencilBody1;
+    }
+
+    .pencil__body2 {
+      animation-name: pencilBody2;
+    }
+
+    .pencil__body3 {
+      animation-name: pencilBody3;
+    }
+
+    .pencil__eraser {
+      animation-name: pencilEraser;
+      transform: rotate(-90deg) translate(49px, 0);
+    }
+
+    .pencil__eraser-skew {
+      animation-name: pencilEraserSkew;
+      animation-timing-function: ease-in-out;
+    }
+
+    .pencil__point {
+      animation-name: pencilPoint;
+      transform: rotate(-90deg) translate(49px, -30px);
+    }
+
+    .pencil__rotate {
+      animation-name: pencilRotate;
+    }
+
+    .pencil__stroke {
+      animation-name: pencilStroke;
+      transform: translate(100px, 100px) rotate(-113deg);
+    }
+
+    /* Animations */
+    @keyframes pencilBody1 {
+
+      from,
+      to {
+        stroke-dashoffset: 351.86;
+        transform: rotate(-90deg);
+      }
+
+      50% {
+        stroke-dashoffset: 150.8;
+        /* 3/8 of diameter */
+        transform: rotate(-225deg);
+      }
+    }
+
+    @keyframes pencilBody2 {
+
+      from,
+      to {
+        stroke-dashoffset: 406.84;
+        transform: rotate(-90deg);
+      }
+
+      50% {
+        stroke-dashoffset: 174.36;
+        transform: rotate(-225deg);
+      }
+    }
+
+    @keyframes pencilBody3 {
+
+      from,
+      to {
+        stroke-dashoffset: 296.88;
+        transform: rotate(-90deg);
+      }
+
+      50% {
+        stroke-dashoffset: 127.23;
+        transform: rotate(-225deg);
+      }
+    }
+
+    @keyframes pencilEraser {
+
+      from,
+      to {
+        transform: rotate(-45deg) translate(49px, 0);
+      }
+
+      50% {
+        transform: rotate(0deg) translate(49px, 0);
+      }
+    }
+
+    @keyframes pencilEraserSkew {
+
+      from,
+      32.5%,
+      67.5%,
+      to {
+        transform: skewX(0);
+      }
+
+      35%,
+      65% {
+        transform: skewX(-4deg);
+      }
+
+      37.5%,
+      62.5% {
+        transform: skewX(8deg);
+      }
+
+      40%,
+      45%,
+      50%,
+      55%,
+      60% {
+        transform: skewX(-15deg);
+      }
+
+      42.5%,
+      47.5%,
+      52.5%,
+      57.5% {
+        transform: skewX(15deg);
+      }
+    }
+
+    @keyframes pencilPoint {
+
+      from,
+      to {
+        transform: rotate(-90deg) translate(49px, -30px);
+      }
+
+      50% {
+        transform: rotate(-225deg) translate(49px, -30px);
+      }
+    }
+
+    @keyframes pencilRotate {
+      from {
+        transform: translate(100px, 100px) rotate(0);
+      }
+
+      to {
+        transform: translate(100px, 100px) rotate(720deg);
+      }
+    }
+
+    @keyframes pencilStroke {
+      from {
+        stroke-dashoffset: 439.82;
+        transform: translate(100px, 100px) rotate(-113deg);
+      }
+
+      50% {
+        stroke-dashoffset: 164.93;
+        transform: translate(100px, 100px) rotate(-113deg);
+      }
+
+      75%,
+      to {
+        stroke-dashoffset: 439.82;
+        transform: translate(100px, 100px) rotate(112deg);
+      }
+    }
+  </style>
+</head>
+
+<body class="bid">
+
+  <!-- Splash screen -->
+  <div class="splash-screen">
+    <svg xmlns="http://www.w3.org/2000/svg" height="200px" width="200px" viewBox="0 0 200 200" class="pencil">
+      <defs>
+        <clipPath id="pencil-eraser">
+          <rect height="30" width="30" ry="5" rx="5"></rect>
+        </clipPath>
+      </defs>
+      <circle transform="rotate(-113,100,100)" stroke-linecap="round" stroke-dashoffset="439.82"
+        stroke-dasharray="439.82 439.82" stroke-width="2" stroke="currentColor" fill="none" r="70"
+        class="pencil__stroke"></circle>
+      <g transform="translate(100,100)" class="pencil__rotate">
+        <g fill="none">
+          <circle transform="rotate(-90)" stroke-dashoffset="402" stroke-dasharray="402.12 402.12" stroke-width="30"
+            stroke="hsl(223,90%,50%)" r="64" class="pencil__body1"></circle>
+          <circle transform="rotate(-90)" stroke-dashoffset="465" stroke-dasharray="464.96 464.96" stroke-width="10"
+            stroke="hsl(223,90%,60%)" r="74" class="pencil__body2"></circle>
+          <circle transform="rotate(-90)" stroke-dashoffset="339" stroke-dasharray="339.29 339.29" stroke-width="10"
+            stroke="hsl(223,90%,40%)" r="54" class="pencil__body3"></circle>
+        </g>
+        <g transform="rotate(-90) translate(49,0)" class="pencil__eraser">
+          <g class="pencil__eraser-skew">
+            <rect height="30" width="30" ry="5" rx="5" fill="hsl(223,90%,70%)"></rect>
+            <rect clip-path="url(#pencil-eraser)" height="30" width="5" fill="hsl(223,90%,60%)"></rect>
+            <rect height="20" width="30" fill="hsl(223,10%,90%)"></rect>
+            <rect height="20" width="15" fill="hsl(223,10%,70%)"></rect>
+            <rect height="20" width="5" fill="hsl(223,10%,80%)"></rect>
+            <rect height="2" width="30" y="6" fill="hsla(223,10%,10%,0.2)"></rect>
+            <rect height="2" width="30" y="13" fill="hsla(223,10%,10%,0.2)"></rect>
+          </g>
+        </g>
+        <g transform="rotate(-90) translate(49,-30)" class="pencil__point">
+          <polygon points="15 0,30 30,0 30" fill="hsl(33,90%,70%)"></polygon>
+          <polygon points="15 0,6 30,0 30" fill="hsl(33,90%,50%)"></polygon>
+          <polygon points="15 0,20 10,10 10" fill="hsl(223,10%,10%)"></polygon>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Main page content -->
+  <div class="page-content">
+    <!-- Message for larger screens -->
+    <div class="desktop-message">
+      <div class="laptop">
+        <div class="screen">
+          <div class="header"></div>
+          <div class="text">Please Use Portable Devices</div>
+        </div>
+        <div class="keyboard"></div>
+      </div>
+
+    </div>
+
+    <!-- Mobile view content -->
+    <div class="mobile-only">
+      <!-- Play button in the center of the screen -->
+      <button class="play-button">
+        <img src="img/image-removebg-preview 9.png" class="play-button" height="100px" width="100px">
+      </button>
+
+      <!-- Floating, curved bottom navbar -->
+      <nav class="navbar navbar-dark">
+
+
+
+        <div class="navbar-nav">
+          <div class="button-container">
+            <button class="button">
+              <img src="img/image-5 1.png" alt="Pencil icon" class="pencil-icon" height="40px" width="40px">
+
+            </button>
+            <button class="button">
+              <img src="img/image-1 1.png" alt="Pencil icon" class="pencil-icon" height="33px" width="33px">
+
+            </button>
+            <button class="button">
+              <img src="img/image-19 1.png" alt="Pencil icon" class="pencil-icon" height="40px" width="40px">
+
+            </button>
+
+            <button class="button">
+              <img src="img/image-8 1.png" alt="Pencil icon" class="pencil-icon" height="33px" width="33px">
+            </button>
+          </div>
+        </div>
+
+
+
+      </nav>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript to control splash screen -->
+  <script>
+    window.addEventListener('load', function () {
+      // Show splash screen for 10 seconds, then hide it
+      setTimeout(function () {
+        document.querySelector('.splash-screen').style.display = 'none';
+        document.querySelector('.page-content').style.display = 'block';
+      }, 5000); // 10000 milliseconds = 10 seconds
+    });
+  </script>
+
+</body>
+
+</html>
